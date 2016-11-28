@@ -4,7 +4,7 @@ var app = new Application();
 
 var startButton = document.querySelector('#startButton');
 var stopButton = document.querySelector('#stopButton');
-var myObject = document.querySelector('div');
+var character = document.querySelector('div');
 var input = document.querySelector('input');
 var isShiftPressed = false;
 
@@ -35,6 +35,7 @@ var removeDeg = function(string) {
   return string;
 };
 
+// functions released and moving to be passed in EventListener
 var released = function (event) {
   if(event.keyCode === 16) {
     isShiftPressed = false;
@@ -45,23 +46,23 @@ var moving = function (event) {
   if (!isShiftPressed) {
     switch (event.keyCode) {
       case 37:
-        myObject.style.left = removePx(myObject.style.left, pixels);
-        console.log(myObject.style.left);
+        character.style.left = removePx(character.style.left, pixels);
+        console.log(character.style.left);
           break;
 
       case 38:
-        myObject.style.top = removePx(myObject.style.top, pixels);
-        console.log(myObject.style.left);
+        character.style.top = removePx(character.style.top, pixels);
+        console.log(character.style.left);
           break;
 
       case 39:
-        myObject.style.left = addPx(myObject.style.left, pixels);
-        console.log(myObject.style.left);
+        character.style.left = addPx(character.style.left, pixels);
+        console.log(character.style.left);
           break;
 
       case 40:
-        myObject.style.top = addPx(myObject.style.top, pixels);
-        console.log(myObject.style.left);
+        character.style.top = addPx(character.style.top, pixels);
+        console.log(character.style.left);
           break;
 
       case 16:
@@ -72,11 +73,11 @@ var moving = function (event) {
   else {
     switch (event.keyCode) {
       case 37:
-        myObject.style.transform = removeDeg(myObject.style.transform);
+        character.style.transform = removeDeg(character.style.transform);
           break;
 
       case 39:
-        myObject.style.transform = addDeg(myObject.style.transform);
+        character.style.transform = addDeg(character.style.transform);
           break;
 
     };
@@ -97,6 +98,7 @@ function Application() {
         pixels = 10;
       };
       console.log('Gotta Go Fast! You\'ve chosen ' + pixels + 'px');
+      // only 'keydown' event works for arrow keys in Chrome
       window.addEventListener('keydown', moving, false);
       window.addEventListener('keyup', released, false);
     };
@@ -107,10 +109,9 @@ function Application() {
     };
 };
 
-myObject.style.left = getComputedStyle(myObject).left;
-myObject.style.top = getComputedStyle(myObject).top;
-myObject.style.right = getComputedStyle(myObject).right;
-myObject.style.bottom = getComputedStyle(myObject).bottom;
+// reading from css
+character.style.left = getComputedStyle(character).left;
+character.style.top = getComputedStyle(character).top;
 
 startButton.addEventListener('click', function() {
   app.start();
